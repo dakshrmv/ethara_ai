@@ -1,0 +1,11 @@
+[build]
+builder = "nixpacks"
+
+[build.nixpacksPlan.phases.setup]
+nixPkgs = ["python3"]
+
+[build.nixpacksPlan.phases.install]
+cmds = ["cd backend && pip install -r requirements.txt"]
+
+[build.nixpacksPlan.phases.start]
+cmd = "cd backend && gunicorn --bind 0.0.0.0:$PORT app:app"

@@ -1,10 +1,29 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from database import get_db_connection, init_db
+import os
 
 app = Flask(__name__)
 CORS(app)
 
+# Initialize DB
+with app.app_context():
+    init_db()
+
+# --- Serve Frontend ---
+FRONTEND_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend'))
+
+@app.route('/')
+def index():
+    return send_from_directory(FRONTEND_FOLDER, 'index.html')
+
+@app.route('/<path:path>')
+def static_proxy(path):
+    if os.path.exists(os.path.join(FRONTEND_FOLDER, path)):
+        return send_from_directory(FRONTEND_FOLDER, path)
+    return send_from_directory(FRONTEND_FOLDER, 'index.html')
+
+# --- API Endpoints ---
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -85,5 +104,5 @@ def get_users():
 
 
 if __name__ == '__main__':
-    init_db()
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
