@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team Task Manager</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>TaskMaster</h2>
+            <div class="user-card">
+                <b id="current-user-name">User</b>
+                <span id="current-user-role">Role</span>
+            </div>
+            <nav>
+                <a class="nav-link active" id="nav-projects-btn">Projects Dashboard</a>
+                <a class="nav-link" id="logout-btn" style="margin-top: 20px; background-color: rgba(220,53,69,0.2); color:#ffdddd;">Logout</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- Projects View -->
+            <div id="projects-view">
+                <div class="top-header">
+                    <h1>Projects</h1>
+                    <button class="btn btn-sm admin-only" id="show-project-form-btn" style="display:none;">+ New Project</button>
+                </div>
+                <div class="card-grid" id="projects-list">
+                    <!-- Cards Go Here -->
+                </div>
+            </div>
+
+            <!-- Tasks View -->
+            <div id="tasks-view" style="display: none;">
+                <div class="top-header">
+                    <div>
+                        <button class="btn btn-secondary btn-sm" id="back-to-projects" style="margin-bottom: 10px;">&larr; Back to Projects</button>
+                        <h1 id="current-project-title">Project Tasks</h1>
+                    </div>
+                    <button class="btn btn-sm admin-only" id="show-task-form-btn" style="display:none;">+ Add Task</button>
+                </div>
+                
+                <div class="kanban-board">
+                    <div class="kanban-column" id="col-TODO">
+                        <h3>To Do</h3>
+                        <div id="list-TODO"></div>
+                    </div>
+                    <div class="kanban-column" id="col-IN_PROGRESS">
+                        <h3>In Progress</h3>
+                        <div id="list-IN_PROGRESS"></div>
+                    </div>
+                    <div class="kanban-column" id="col-DONE">
+                        <h3>Done</h3>
+                        <div id="list-DONE"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="project-modal">
+        <div class="modal-content">
+            <h3>New Project</h3>
+            <form id="project-form">
+                <label>Project Name</label>
+                <input type="text" id="project-name" class="form-control" required>
+                <label>Description</label>
+                <textarea id="project-desc" class="form-control" rows="3"></textarea>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-modal" data-modal="project-modal">Cancel</button>
+                    <button type="submit" class="btn">Create Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="task-modal">
+        <div class="modal-content">
+            <h3>New Task</h3>
+            <form id="task-form">
+                <label>Task Title</label>
+                <input type="text" id="task-title" class="form-control" required>
+                <label>Description</label>
+                <textarea id="task-desc" class="form-control" rows="2"></textarea>
+                <label>Due Date</label>
+                <input type="date" id="task-due-date" class="form-control">
+                <label>Assignee</label>
+                <select id="task-assignee" class="form-control">
+                    <option value="">Unassigned</option>
+                </select>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary close-modal" data-modal="task-modal">Cancel</button>
+                    <button type="submit" class="btn">Add Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
